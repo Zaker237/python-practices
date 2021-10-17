@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# folders that should not yet be push
+yolov3-tf2/
