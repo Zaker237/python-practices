@@ -6,4 +6,4 @@ This directory contains the codes and scripts of the applications that I write w
 
 - [ ] [YOLO-v3](./yolo/)
 
-- [x] [Chat room with socket](./chatroom/)
+- [x] [Chatroom with socket](./chatroom/)
