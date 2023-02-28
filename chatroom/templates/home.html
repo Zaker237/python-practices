@@ -5,20 +5,31 @@
     method="POST"
 >
     <h3>Enter the Chat room</h3>
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" placeholder="Pick a name!" value="{{name}}"/>
+    <div class="flex w-full">
+        <input
+            class="w-full py-4"
+            type="text"
+            name="name"
+            placeholder="Pick a name!"
+            value="{{name}}"
+        />
     </div>
     <div class="flex flex-row w-full">
-        <input type="text" name="code" placeholder="Room Code" value="{{code}}"/>
+        <input
+            class="font-bold py-4"
+            type="text"
+            name="code"
+            placeholder="Room Code"
+            value="{{code}}"
+        />
         <button
-            class="font-bold bg-orange-600 px-5"
+            class="font-bold bg-orange-500 px-5 hover:bg-orange-600"
             type="submit"
             name="join"
         >Join Room</button>
     </div>
     <button
-        class="py-4 bg-green-600 w-full rounded"
+        class="py-4 bg-green-500 w-full rounded hover:bg-green-600"
         type="submit"
         name="create"
     >Create a Room</button>
