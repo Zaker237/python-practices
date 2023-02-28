@@ -1,59 +1,82 @@
+{% block meta %}
+<meta id="user-data" data-name="{{user}}">
+{% endblock %}
+
 {% extends 'base.html' %}
 {% block content %}
-<div class="flex flex-col bg-gray-50 h-4/5 min-h-4/5 w-4/5 items-stretch border-2 border-stone-900">
-    <h2>Chat Room {{code}}</h2>
-    <div id="messages" class="flex-1 w-full overflow-y-scroll">
-    </div>
-    <div class="flex w-full">
-        <input
-            class="flex-1 p-2"
-            type="text"
-            row=3
-            name="message"
-            placeholder="Message"
-            id="message"
-        />
-        <button
-            class="bg-green-700 py-2 px-16 font-bold"
-            type="button"
-            name="send"
-            id="send-btn"
-            onclick="sendMessage()"
-        >Send</button>
-    </div>
+<div class="flex flex-col bg-gray-50 h-3/5 h-max-3/5 w-4/5 items-stretch border-2 border-stone-900">
+	<div class="flex flex-col items-center justify-center mt-3">
+		<p class="text-xl">
+			Chat Room
+			<span class="font-bold">{{code}} </span>
+		</p>
+		<p class="italic">
+			connected as:
+			<span class="font-bold">{{user}} </span>
+		</p>
+	</div>
+	<hr class="m-3 border-1 border-stone-900" />
+	<div id="messages" class="flex-1 w-full overflow-y-scroll">
+	</div>
+	<div class="flex w-full mt-5">
+		<input class="flex-1 p-2" type="text" row=3 name="message" placeholder="Message" id="message" />
+		<button class="bg-green-600 py-2 px-16 hover:bg-green-700 font-bold" type="button" name="send" id="send-btn"
+			onclick="sendMessage()">Send</button>
+	</div>
 </div>
 <script type="text/javascript">
-    var socketio = io();
-    const messages = document.getElementById("messages");
+	var socketio = io();
+	const messages = document.getElementById("messages");
 
-    const createMessage = (name, msg) => {
-        const content = `
-            <div class="flex items-center justify-between pl-4 pr-4">
-                <span>
-                    <strong>${name}</strong>: ${msg}   
-                </span>
-                <span class="text-sm text-gray-800">
-                    ${new Date().toLocaleString()}
-                </span>
-            </div>
-        `;
-        messages.innerHTML += content;
-    }
+const createMessage = (name, msg, datum, user) => {
+	let content = "";
+	if(name === user){
+		content = `
+			<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+				<div>
+					<div class="bg-green-600 p-3 rounded-l-lg rounded-br-lg mb-1">
+						<p class="text-sm">${msg}</p>
+					</div>
+					<span class="text-xs text-gray-500 leading-none mt-2">${datum}</span>
+				</div>
+				<div class="flex flex-shrink-0 h-10 w-10 rounded-full bg-green-600 border-2 border-green-600 items-center justify-center">
+					<p class="flex font-bold items-center justify-center">${name[0]}</p>
+				</div>
+			</div>
+		`;
+	}else{
+		content = `
+			<div class="flex w-full mt-2 space-x-3 max-w-xs">
+				<div class="flex flex-shrink-0 h-10 w-10 text-white rounded-full bg-blue-600 border-2 border-blue-600 items-center justify-center">
+					<p class="flex font-bold items-center justify-center">${name[0]}</p>
+				</div>
+				<div>
+					<div class="bg-blue-600 p-3 text-white rounded-r-lg rounded-bl-lg">
+						<p class="text-sm">${msg}</p>
+					</div>
+					<span class="text-xs text-gray-500 leading-none mt-2">${datum}</span>
+				</div>
+			</div>
+		`;
+	}
+	if(!content) return
+	messages.innerHTML += content;
+}
 
-    socketio.on("message", (data) => {
-        createMessage(data.name, data.message);
-    });
+socketio.on("message", (data) => {
+	createMessage(data.name, data.message, data.date, "{{user}}");
+});
 
-    const sendMessage = () => {
-        const message = document.getElementById("message");
-        if (!message.value) return
-        socketio.emit("message", {data: message.value});
-        message.value = "";
-    }
+const sendMessage = () => {
+	const message = document.getElementById("message");
+	if (!message.value) return
+	socketio.emit("message", { msg: message.value });
+	message.value = "";
+}
 </script>
 {% for msg in messages %}
-    <script type="text/javascript">
-        createMessage("{{msg.name}}", "{{msg.message}}");
-    </script>
+<script type="text/javascript">
+	createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.date}}", "{{user}}");
+</script>
 {% endfor %}
 {% endblock %}
