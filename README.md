@@ -4,6 +4,8 @@ This directory contains the codes and scripts of the applications that I write w
 
 ## Projects and script
 
-- [ ] [YOLO-v3](./yolo/)
+- [ ] [YOLO-v1](./yolo/)
 
 - [x] [Chatroom with socket](./chatroom/)
+
+- [x] [pygame car racing](./car-racing-game/)
