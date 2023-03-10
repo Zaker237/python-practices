@@ -13,7 +13,7 @@ STAR_HEIGHT = 30
 STAR_VEL = 3
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Particla Game")
+pygame.display.set_caption("Particle Game")
 
 BG = pygame.transform.scale(pygame.image.load("bg.jpeg"), (WIDTH, HEIGHT))
 FONT = pygame.font.SysFont("comicsans", 30)
