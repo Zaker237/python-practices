@@ -1,2 +1,0 @@
-customtkinter==5.1.2
-tkintermapview==1.28
