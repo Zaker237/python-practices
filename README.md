@@ -9,5 +9,3 @@ This directory contains the codes and scripts of the applications that I write w
 - [x] [Chatroom with socket](./chatroom/)
 
 - [x] [pygame car racing](./car-racing-game/)
-
-- [x] [Particle Game](./particle-game/)
